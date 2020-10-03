@@ -1,0 +1,48 @@
+---
+title: "Setup"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#put all packages here
+pacman::p_load(ggsummary,tidyverse)
+```
+
+# Set up the package environment
+
+0. Install `pacman`
+0.  Put all needed packages into `pacman::p_load`
+```{r}
+#install.packages('pacman')
+```
+
+1. First use File > New Project > Package
+2. File > New File > R Markdown
+3. Create the `data-raw` directory
+
+```{r}
+usethis::use_data_raw()
+```
+
+4. Move raw data the `data-raw` directory
+5. Import data 
+
+```{r}
+le <- read_csv("data-raw/life-expectancy.csv")
+le %>% head
+```
+```{r}
+le %>% gtsummary::tbl_summary()
+```
+Save the data to your project
+```{r}
+usethis::use_data(le)
+```
+
+Build your package  
+Build  > Install and Restart
+
+
+
+
