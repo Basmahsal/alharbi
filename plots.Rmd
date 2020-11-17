@@ -1,6 +1,9 @@
 ---
-title: "plots"
-output: html_document
+title: "Project Proposal"
+author: "Basmah"
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -8,7 +11,16 @@ knitr::opts_chunk$set(echo = TRUE)
 pacman::p_load(gtsummary,tidyverse,alharbi)
 ```
 
+## Purpose analize health care measurements across the world with diffrenent measures 
 ```{r}
-alharbi::le
+d %>% head
 ```
+
+```{r}
+d %>% 
+  ggplot(aes(x=Year, y=expenditure, color= country_name)) +
+  geom_point()+
+  guides(color = FALSE)
+```
+
 

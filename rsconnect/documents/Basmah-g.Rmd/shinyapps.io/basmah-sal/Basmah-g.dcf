@@ -1,0 +1,13 @@
+name: Basmah-g
+title: Basmah-g
+username:
+account: basmah-sal
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3246168
+bundleId: 3868981
+url: https://basmah-sal.shinyapps.io/Basmah-g/
+when: 1605571869.782
+asMultiple: TRUE
+asStatic: FALSE
+ignoredFiles: data-raw/life-expectancy.csv|data-raw/datac.csv|data-raw/4bd3a9ba-b34d-4a2d-b9e3-9ff60a60b55e_Data.csv|Basmah m.Rmd|data/dd.rda|description|getting data.Rmd|graphs and plots.Rmd|plots.Rmd|Setup.Rmd|to do list.Rmd

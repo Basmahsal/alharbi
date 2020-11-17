@@ -1,0 +1,336 @@
+---
+title: "Getting data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(gtsummary,tidyverse,janitor,WDI)
+```
+
+## Chosen Indicators/Series
+
+SH.UHC.NOP2.ZG
+:  increase in poverty gap at $3.20 ($ 2011 PPP) poverty line due to out-of-pocket health care expenditure (% of poverty line)
+
+SP.DYN.LE00.IN
+:    
+
+SH.XPD.OOPC.CH.ZS
+:  Out of pocket expenditure
+
+SH.XPD.PVTD.PP.CD
+:  Domestic private health expenditure (per capite)
+
+SH.XPD.EHEX.PP.CD
+:  External health expenditure 
+
+
+
+
+```{r}
+series_choices <- c("SH.UHC.NOP2.ZG", 
+                    "SH.XPD.CHEX.PP.CD" ,
+                    "NY.ADJ.NNTY.KD.ZG" ,
+                    "SP.DYN.LE00.IN" ,
+                    "SH.XPD.EHEX.PP.CD",
+                    "SH.XPD.PVTD.PP.CD",
+                    "SH.XPD.GHED.PP.CD",
+                    "SH.XPD.OOPC.CH.ZS")
+```
+
+```{r}
+outcomes <- c("SH.UHC.NOP2.ZG", 
+                    "SH.XPD.CHEX.PP.CD" ,
+                    "SH.XPD.EHEX.PP.CD",
+                    "SH.XPD.OOPC.CH.ZS")
+```
+
+
+```{r}
+predicters <- c("NY.ADJ.NNTY.KD.ZG" ,
+                    "SP.DYN.LE00.IN" ,
+                    "SH.XPD.PVTD.PP.CD",
+                    "SH.XPD.GHED.PP.CD")
+```
+
+
+
+
+```{r}
+dd <- WDI( indicator = series_choices)
+```
+
+```{r}
+usethis::use_data(dd, overwrite = TRUE)
+```
+
+
+
+```{r}
+dd %>% 
+  count(country)
+```
+```{r}
+dd %>% 
+  filter(country == 'Saudi Arabia')
+```
+
+
+```{r}
+d <- dd %>%
+  na.omit() 
+
+d %>% head
+```
+
+
+```{r}
+d1 <- read_csv("data-raw/59cc850e-8964-4231-bd2d-00676a3f3777_Data.csv")
+d1 %>% head
+```
+```{r}
+dd1 <- WDI(indicator = "SH.UHC.NOP2.ZG") 
+```
+
+```{r}
+dd1 %>% head
+```
+
+```{r}
+dd1 %>% 
+  filter(!is.na(SH.UHC.NOP2.ZG )) %>% 
+  group_by(country) %>% 
+  summarize(mean = mean(SH.UHC.NOP2.ZG,na.rm = TRUE),.groups = 'drop') %>% 
+  arrange(desc(mean))
+```
+
+## Extrnal health expenditure 
+Series code
+:   SH.XPD.EHEX.PP.CD
+
+```{r}
+ex <- WDI::WDI(indicator = "SH.XPD.EHEX.PP.CD")
+ex %>% head
+```
+
+```{r}
+usethis::use_data(ex, overwrite = TRUE)
+
+```
+```{r}
+ex %>% 
+  count(country, year) %>% 
+  arrange(desc(n))
+```
+```{r}
+ex %>% 
+  filter(!is.na(SH.XPD.EHEX.PP.CD)) %>% 
+  group_by(country) %>% 
+  summarize(mean = mean(SH.XPD.EHEX.PP.CD,na.rm = TRUE),.groups = 'drop') %>% 
+  arrange(desc(mean))
+```
+
+## Out of pocket expenditure
+Series Code
+:     SH.XPD.OOPC.CH.ZS
+```{r}
+OUT <- WDI::WDI(indicator = "SH.XPD.OOPC.CH.ZS" )
+OUT %>% head
+```
+```{r}
+usethis::use_data(OUT, overwrite = TRUE)
+
+```
+
+```{r}
+OUT %>% 
+  count(country, year) %>% 
+  arrange(desc(n))
+```
+
+```{r}
+OUT  %>% 
+  filter(!is.na(SH.XPD.OOPC.CH.ZS)) %>% 
+  group_by(country) %>% 
+  summarise(mean=mean(SH.XPD.OOPC.CH.ZS, na.rm=TRUE), .groups="drop") %>% 
+  arrange(desc(mean))
+```
+
+
+
+
+## Domestic private health expenditure (per capite)
+Series Code
+:    SH.XPD.PVTD.PP.CD
+```{r}
+p <- WDI::WDI(indicator = "SH.XPD.PVTD.PP.CD")
+
+```
+
+```{r}
+usethis::use_data(p, overwrite = TRUE)
+```
+```{r}
+p %>% 
+  count(country, year) %>% 
+  arrange(desc(n))
+```
+
+```{r}
+p %>% 
+  filter(!is.na(SH.XPD.PVTD.PP.CD)) %>% 
+  group_by(country) %>% 
+  summarise(mean=mean(SH.XPD.PVTD.PP.CD, na.rm=TRUE), .groups="drop") %>% 
+  arrange(desc(mean))
+  
+```
+
+
+
+
+## Life Expectancy at Birth(years)
+
+Series code
+:  SP.DYN.LIFE.MF
+
+```{r}
+
+WDIsearch('life expectancy')
+```
+
+```{r}
+WDIsearch(string = 'Health expenditure',field = 'description')
+```
+
+```{r}
+le <- WDI::WDI(indicator = "SP.DYN.LE00.IN")
+le %>% head
+```
+
+```{r}
+usethis::use_data(le, overwrite = TRUE)
+```
+
+```{r}
+le %>% 
+  count(country, year) %>% 
+  arrange(desc(n))
+
+```
+
+
+## Domestic general govermnent health expenditure (per capite)
+Series Code
+:    SH.XPD.GHED.PP.CD
+```{r}
+dg <- WDI::WDI(indicator = "SH.XPD.GHED.PP.CD")
+dg %>% head
+```
+```{r}
+usethis::use_data(dg, overwrite = TRUE)
+```
+```{r}
+dg %>% 
+  count(country, year) %>% 
+  arrange(desc(n))
+```
+
+
+```{r}
+dg  %>% 
+  filter(!is.na(SH.XPD.GHED.PP.CD)) %>% 
+  group_by(country) %>% 
+  summarise(mean=mean(SH.XPD.GHED.PP.CD, na.rm=TRUE), .groups="drop") %>% 
+  arrange(desc(mean))
+```
+
+
+
+
+
+
+##  Current health expenditure per capita, PPP (current international $)
+
+Series Code
+:  SH.XPD.CHEX.PP.CD
+
+```{r}
+ce <- WDI(indicator = "SH.XPD.CHEX.PP.CD")
+ce %>% head
+```
+
+```{r}
+usethis::use_data(ce, overwrite = TRUE)
+
+```
+```{r}
+
+ce %>% 
+  count(country, year) %>% 
+  arrange(desc(n))
+
+```
+
+
+## Adjusted net national income (annual % growth)
+
+Series code
+:  NY.ADJ.NNTY.KD.ZG
+```{r}
+adj <- WDI(indicator = "NY.ADJ.NNTY.KD.ZG")
+adj %>% head
+```
+
+```{r}
+usethis::use_data(adj, overwrite = TRUE)
+```
+
+```{r}
+adj %>% 
+  count(country, year) %>% 
+  arrange(desc(n))
+```
+```{r}
+d <- ce %>% 
+  inner_join(adj, by = c('year','country')) %>% 
+  inner_join(le, by = c('year','country')) %>% 
+  select(-starts_with("iso")) %>% 
+  select(country, year, everything())
+
+d %>% head(10)
+```
+```{r}
+usethis::use_data(d, overwrite = TRUE)
+```
+
+
+
+
+```{r}
+country_choices <- 
+  d %>% 
+  select(country, SH.XPD.CHEX.PP.CD) %>% 
+  na.omit() %>% 
+  select(country) %>% 
+  distinct() %>% 
+  arrange() %>% 
+  pull(country)
+country_choices
+
+```
+
+```{r}
+usethis::use_data(country_choices, overwrite = TRUE)
+```
+```{r}
+series_choices <- d %>% 
+select(-country, -year) %>% 
+names
+series_choices
+```
+
+```{r}
+usethis::use_data(series_choices, overwrite = TRUE)
+```
+

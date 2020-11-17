@@ -1,0 +1,44 @@
+---
+title: "graphs and plots"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(alharbi, tidyverse)
+```
+
+```{r}
+d %>% head 
+```
+
+```{r}
+d %>% 
+  select( year, country, SH.XPD.CHEX.PP.CD) %>% 
+  na.omit() %>% 
+  ggplot(aes(x=year, y=SH.XPD.CHEX.PP.CD
+, color= country)) +
+  geom_point()+
+  guides(color = FALSE)
+```
+```{r}
+ex %>% 
+  select( year, country, SH.XPD.EHEX.PP.CD) %>% 
+  na.omit() %>% 
+  ggplot(aes(x=year, y=SH.XPD.EHEX.PP.CD
+, color= country)) +
+  geom_point()+
+  guides(color = FALSE)
+```
+```{r}
+OUT %>% 
+  select( year, country, SH.XPD.OOPC.CH.ZS) %>% 
+  na.omit() %>% 
+  ggplot(aes(x=year, y=SH.XPD.OOPC.CH.ZS
+, color= country)) +
+  geom_point()+
+  guides(color = FALSE)
+```
+
+
+

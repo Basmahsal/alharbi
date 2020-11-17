@@ -1,12 +1,14 @@
 ---
 title: "Setup"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #put all packages here
-pacman::p_load(ggsummary,tidyverse)
+pacman::p_load(gtsummary,tidyverse,janitor)
 ```
 
 # Set up the package environment
@@ -29,18 +31,57 @@ usethis::use_data_raw()
 5. Import data 
 
 ```{r}
-le <- read_csv("data-raw/life-expectancy.csv")
+le <- read_csv("data-raw/life-expectancy.csv") %>% 
+  rename(country_name=Entity, country_code=Code)
 le %>% head
 ```
+
 ```{r}
-le %>% gtsummary::tbl_summary()
+ce <- read_csv("data-raw/datac.csv") %>% 
+  clean_names() %>% 
+pivot_longer(starts_with("x"),names_to = "year", values_to = "expenditure") %>% 
+  mutate(Year = as.numeric(str_extract(year,"(\\d{4})"))) %>% 
+  mutate(expenditure = as.numeric(expenditure)) %>% 
+  select(country_name, country_code, Year, expenditure) %>% 
+  na.omit()
+ce  %>% head
+```
+
+
+```{r}
+adj <- read_csv("data-raw/4bd3a9ba-b34d-4a2d-b9e3-9ff60a60b55e_Data.csv") %>%
+  clean_names() %>% 
+  pivot_longer(starts_with("x"),names_to = "year", values_to = "adjusted") %>% 
+  mutate(Year = as.numeric(str_extract(year,"(\\d{4})"))) %>% 
+  filter(series_code == "SH.XPD.EHEX.PP.CD") %>% 
+  arrange(country_name, Year) %>% 
+  select(country_name, country_code, Year, adjusted, everything()) %>% 
+  mutate(adjusted = as.numeric(adjusted)) %>% 
+  select(country_name, country_code, Year, adjusted) %>% 
+  na.omit()
+adj 
+```
+
+```{r}
+d <- ce %>% 
+  inner_join(adj, by = c('country_code','Year','country_name')) %>% 
+  inner_join(le, by = c('country_code','Year','country_name')) %>%
+  filter(!is.na(adjusted), !is.na(expenditure))
+d %>% head(100)
+```
+
+
+```{r}
+d %>% 
+  select(-country_code) %>% 
+  gtsummary::tbl_summary(by = c("country_name"))
 ```
 Save the data to your project
 ```{r}
-usethis::use_data(le)
+usethis::use_data(adj,ce,d,overwrite = TRUE)
 ```
 
-Build your package  
+Build my package  
 Build  > Install and Restart
 
 
