@@ -1,0 +1,33 @@
+---
+title: "gat"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(shiny)
+library(miniUI)
+library(dplyr)
+library(ggplot2)
+
+
+
+
+
+outcomes <- c("SH.UHC.NOP2.ZG",
+                  "SH.XPD.CHEX.PP.CD" ,
+                  "SH.XPD.EHEX.PP.CD",
+                  "SH.XPD.OOPC.CH.ZS")
+
+predicters <- c("NY.ADJ.NNTY.KD.ZG" ,
+                "SP.DYN.LE00.IN" ,
+                "SH.XPD.PVTD.PP.CD",
+                "SH.XPD.GHED.PP.CD")
+myGadgetFunc(dd,outcomes, predictors)
+
+```
+

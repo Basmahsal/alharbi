@@ -110,6 +110,12 @@ The data can be saved to the package if needed.
 6. Deploy the R shiny app.(November 20)
 
 
+## install package
+
+```{r}
+remotes::install_github("Basmahsal/alharbi")
+```
+
 
 
 

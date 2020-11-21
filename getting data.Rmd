@@ -8,23 +8,6 @@ knitr::opts_chunk$set(echo = TRUE)
 pacman::p_load(gtsummary,tidyverse,janitor,WDI)
 ```
 
-## Chosen Indicators/Series
-
-SH.UHC.NOP2.ZG
-:  increase in poverty gap at $3.20 ($ 2011 PPP) poverty line due to out-of-pocket health care expenditure (% of poverty line)
-
-SP.DYN.LE00.IN
-:    
-
-SH.XPD.OOPC.CH.ZS
-:  Out of pocket expenditure
-
-SH.XPD.PVTD.PP.CD
-:  Domestic private health expenditure (per capite)
-
-SH.XPD.EHEX.PP.CD
-:  External health expenditure 
-
 
 
 
@@ -38,6 +21,7 @@ series_choices <- c("SH.UHC.NOP2.ZG",
                     "SH.XPD.GHED.PP.CD",
                     "SH.XPD.OOPC.CH.ZS")
 ```
+
 
 ```{r}
 outcomes <- c("SH.UHC.NOP2.ZG", 
