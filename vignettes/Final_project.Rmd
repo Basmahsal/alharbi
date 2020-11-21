@@ -36,7 +36,7 @@ This app helps inform policy makers and tell them how health insurance and healt
 
 ```{r}
 # install.packages("devtools")
-devtools::install_github("Basmahsal/alharbi")
+#devtools::install_github("Basmahsal/alharbi")
 
 ```
 
@@ -48,7 +48,7 @@ You can also supply your own data set.
 
 The users need to specify the outcomes and the predictors as I showed below.
 
-```{r,eval=FALSEß}
+```{r,eval=FALSE}
 library(shiny)
 library(miniUI)
 library(dplyr)

@@ -38,7 +38,7 @@ You can also supply your own data set.
 
 The users need to specify the outcomes and the predictors as I showed below.
 
-```{r}
+```{r,eval=FALSE}
 library(alharbi)
 library(shiny)
 library(miniUI)
