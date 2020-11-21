@@ -23,7 +23,6 @@ The goal of alharbi is to ...
 ## Installation
 
 
-
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
